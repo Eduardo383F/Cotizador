@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Vista previa</title>
+</head>
+<body>
+  <h2>Cotización para {{.Destinatario}}</h2>
+  <p><strong>Fecha:</strong> {{.Fecha}}</p>
+  <p><strong>Concepto:</strong> {{.Concepto}}</p>
+  <table border="1">
+    <tr>
+      <th>Cant.</th><th>No. Parte</th><th>Descripción</th><th>Precio Unitario</th><th>Precio Total</th>
+    </tr>
+    {{range .Productos}}
+    <tr>
+      <td>{{.Cantidad}}</td><td>{{.Parte}}</td><td>{{.Descripcion}}</td>
+      <td>${{.PrecioUnitario}}</td><td>${{.PrecioTotal}}</td>
+    </tr>
+    {{end}}
+  </table>
+  <br>
+  <form action="/descargar-pdf" method="POST">
+    <!-- reenviamos los datos ocultos -->
+    <input type="hidden" name="fecha" value="{{.Fecha}}">
+    <input type="hidden" name="destinatario" value="{{.Destinatario}}">
+    <input type="hidden" name="concepto" value="{{.Concepto}}">
+    <input type="hidden" name="iva" value="{{.IVA}}">
+    {{range .Productos}}
+      <input type="hidden" name="cantidad" value="{{.Cantidad}}">
+      <input type="hidden" name="parte" value="{{.Parte}}">
+      <input type="hidden" name="descripcion" value="{{.Descripcion}}">
+      <input type="hidden" name="precio" value="{{.PrecioUnitario}}">
+    {{end}}
+    <button type="submit">Descargar PDF</button>
+  </form>
+</body>
+</html>

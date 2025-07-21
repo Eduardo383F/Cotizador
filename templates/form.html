@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generar Cotización</title>
+  <script>
+    let productos = 1;
+    function agregarProducto() {
+      if (productos >= 20) {
+        alert("Máximo 20 productos.");
+        return;
+      }
+      const tabla = document.getElementById("productos");
+      const fila = tabla.insertRow();
+      fila.innerHTML = `
+        <td><input name="cantidad" required></td>
+        <td><input name="parte" required></td>
+        <td><input name="descripcion" required></td>
+        <td><input name="precio" required></td>
+      `;
+      productos++;
+    }
+  </script>
+</head>
+<body>
+  <h2>Formulario de Cotización</h2>
+  <form action="/vista-previa" method="POST">
+    <label>Fecha (ej. JULIO DE 2025):</label><br>
+    <input type="text" name="fecha" required><br><br>
+
+    <label>Nombre del destinatario:</label><br>
+    <input type="text" name="destinatario" required><br><br>
+
+    <label>Concepto:</label><br>
+    <input type="text" name="concepto" required><br><br>
+
+    <label>¿Incluir precios con IVA?</label>
+    <input type="checkbox" name="iva"><br><br>
+
+    <table border="1" id="productos">
+      <tr>
+        <th>Cantidad</th><th>No. Parte</th><th>Descripción</th><th>Precio Unitario</th>
+      </tr>
+      <tr>
+        <td><input name="cantidad" required></td>
+        <td><input name="parte" required></td>
+        <td><input name="descripcion" required></td>
+        <td><input name="precio" required></td>
+      </tr>
+    </table>
+    <br>
+    <button type="button" onclick="agregarProducto()">Agregar otro producto</button><br><br>
+    <button type="submit">Vista previa</button>
+  </form>
+</body>
+</html>
